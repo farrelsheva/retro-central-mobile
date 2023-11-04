@@ -14,3 +14,6 @@
 
 ### Q7.2
 #### Sebutkan seluruh widget yang kamu gunakan untuk menyelesaikan tugas ini dan jelaskan fungsinya masing-masing.
+
+| Widget | Fungsi |
+| --- | --- |

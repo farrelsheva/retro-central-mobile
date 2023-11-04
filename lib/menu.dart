@@ -9,22 +9,14 @@ class MyHomePage extends StatelessWidget {
     ShopItem("Logout", Icons.logout, Colors.teal),
   ];
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Shopping List',
+          'Store Page',
         ),
+        backgroundColor: Colors.deepOrange,
       ),
       body: SingleChildScrollView(
         // Widget wrapper yang dapat discroll
@@ -37,7 +29,7 @@ class MyHomePage extends StatelessWidget {
                 padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
                 // Widget Text untuk menampilkan tulisan dengan alignment center dan style yang sesuai
                 child: Text(
-                  'PBP Shop', // Text yang menandakan toko
+                  'Retro Central', // Text yang menandakan toko
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 30,
