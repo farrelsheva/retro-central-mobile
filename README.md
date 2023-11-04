@@ -1,16 +1,16 @@
-# retro_central
+# Farrel Sheva A. 2206033044 
+--- 
+## Tugas 7
 
-A new Flutter project.
+### Q7.1 
+#### Apa perbedaan antara Stateless dan stateful widget dalam konteks pengembangan aplikasi flutter?
+| Stateless | Stateful |
+| --- | --- |
+| Stateless widget adalah widget yang tidak memiliki state. | Stateful widget adalah widget yang memiliki state. |
+| Tidak mempunyai setState() | Memiliki setState() |
+| Tidak dapat berubah seiring waktu | Dapat berubah seiring waktu |
+| Icon, IconButton, dan Text adalah contoh dari stateless widget | Checkbox, Radio, Slider, Form, dan TextField adalah contoh dari stateful widget |
+| Tidak Berubah, Layout bersifat static, Mendisplay data dari Constructor| Berubah saat berinteraksi dengan User, bisa berubah sesuai input |
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Q7.2
+#### Sebutkan seluruh widget yang kamu gunakan untuk menyelesaikan tugas ini dan jelaskan fungsinya masing-masing.
