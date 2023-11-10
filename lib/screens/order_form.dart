@@ -13,7 +13,8 @@ class _OrderFormState extends State<OrderForm>{
   String _name = '';
   int _price = 0;
   String _description = '';
-  int _year = 0;
+  int _year = DateTime.now().year;
+  List<int> yearList = List<int>.generate(100, (i) => 1970 + i);
 
   @override
   Widget build(BuildContext context){
@@ -109,19 +110,34 @@ class _OrderFormState extends State<OrderForm>{
                   },
                 ),
               ),//description form
-              Padding(
+              Padding (
                 padding: const EdgeInsets.all(8.0),
-                child: YearPicker(
-                  firstDate: DateTime(1970),
-                  lastDate: DateTime(2021),
-                  selectedDate: DateTime.now(),
-                  onChanged: (DateTime dateTime) {
-                    setState(() {
-                      _year = dateTime.year;
-                    });
-                  },
+                child: InputDecorator(
+                  decoration: InputDecoration(
+                    labelText: 'Year',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<int>(
+                      isExpanded: true,
+                      value: _year,
+                      onChanged: (int? newValue) {
+                        setState(() {
+                          _year = newValue!;
+                        });
+                      },
+                      items: yearList.map((int value) {
+                        return DropdownMenuItem<int>(
+                          value: value,
+                          child: Text(value.toString()),
+                        );
+                      }).toList(),
+                    ),
+                  ),
                 ),
-                ),//Year Picker
+              ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
@@ -161,6 +177,7 @@ class _OrderFormState extends State<OrderForm>{
                             }
                         );
                         _formKey.currentState!.reset();
+                        _year = DateTime.now().year;
                       }
                     },
                     child: const Text(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:retro_central/screens/menu.dart';
 import 'package:retro_central/screens/order_form.dart';
+import 'package:retro_central/screens/order_list.dart';
 
 class LeftDrawer extends StatelessWidget{
   const LeftDrawer({super.key});
@@ -50,7 +51,10 @@ class LeftDrawer extends StatelessWidget{
             leading: const Icon(Icons.checklist),
             title: const Text('Lihat Order'),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const OrderList())
+              );
             },
           ),
           ListTile(

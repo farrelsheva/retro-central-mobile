@@ -9,7 +9,7 @@
 | Stateless widget adalah widget yang tidak memiliki state. | Stateful widget adalah widget yang memiliki state. |
 | Tidak mempunyai setState() | Memiliki setState() |
 | Tidak dapat berubah seiring waktu | Dapat berubah seiring waktu |
-| Icon, IconButton, dan Text adalah contoh dari stateless widget | Checkbox, Radio, Slider, Form, dan TextField adalah contoh dari stateful widget |
+| Icon, IconButton, dan Text adalah cntoh dari stateless widget | Checkbox, Radio, Slider, Form, dan TextField adalah contoh dari stateful widget |
 | Tidak Berubah, Layout bersifat static, Mendisplay data dari Constructor| Berubah saat berinteraksi dengan User, bisa berubah sesuai input |
 
 ### Q7.2
@@ -62,4 +62,101 @@
 - Snackbar ini akan menampilkan nama dari shopcard yang diclick
 - Di dalam inkwell, akan ada container yang memuat Attribut Icon dan text yang kita set di dalam class ShopCard tadi
 - MODIFIKASI: dengan menggunakan item.color, kita bisa memodifikasi warna dari card yang akan ditampilkan di dalam attribut `color:` di material
+
+
+## Tugas 8
+
+### Q8.1
+
+#### Jelaskan perbedaan antara `Navigator.push()` dan `Navigator.pushReplacement()`, disertai dengan contoh mengenai penggunaan kedua metode tersebut yang tepat!
+ `Navigator.push()`
+ Digunakan untuk menambahkan route baru ke dalam stack route yang ada, sehingga route yang baru ditambahkan akan ditampilkan di atas route yang sebelumnya. <br>
+
+ Contoh dari penggunaanya adalah jika ingin bisa kembali ke route sebelumnya, seperti misalnya jika pada aplikasi belanja ingin melihat shopping cart lalu langsung balik ke browsing. <br>
+
+
+`Navigator.pushreplacement()` Digunakan untuk menukar route baru dengan route yang sebelumnya, sehingga route yang sebelumnya akan dihapus dari stack route dan route yang baru akan ditambahkan ke dalam stack route. <br>
+
+Contoh dari penggunaanya adalah jika ingin tidak bisa kembali ke route sebelumnya, seperti misalnya jika pada aplikasi login ingin langsung menuju ke home page setelah login. <br>
+
+### Q8.2
+
+#### Jelaskan masing-masing layout widget pada Flutter dan konteks penggunaannya masing-masing!
+
+Single Child Layout Widget
+
+| Widget | Fungsi |
+| --- | --- |
+| Align| Widget yang mengalign childnya, dan bisa mengatur sizenya tergantung size childnya |
+| AspectRatio | Widget yang mengatur aspect ratio dari childnya |
+| Baseline | Widget yang mengatur childnya bergantung dari Baseline childnya |
+| Center | Widget yang mengatur childnya agar berada di tengah |
+| ConstrainedBox | Widget yang mengatur childnya dengan batasan yang diberikan |
+| Container | Widget yang versatile, digunakan untuk mengatur styling dan posisi satu child  |
+| CustomSingleChildLayout | Widget yang mengatur posisi childnya dengan custom |
+| Expanded | Widget yang mengatur childnya agar memenuhi space yang tersedia (di Row, Column, atau Flex) |
+| FittedBox | Widget yang mengatur childnya agar sesuai dengan sizenya |
+| FractionallySizedBox | Widget yang mengatur childnya dengan persentase dari parentnya |
+| IntrinsicHeight | Widget yang mengatur size childnya sesuai dengan ketinggian intrinsik childnya |
+| IntrinsicWidth | Widget yang mengatur size childnya sesuai dengan lebar intrinsik childnya |
+| LimitedBox | Widget yang mengatur sizenya hanya saat unconstrained |
+| Offstage | Widget yang menempatkan childnya di tree, tapi tidak ditampilkan. |
+| OverflowBox | Widget yang mengatur childnya berbeda dari parentnya, memungkinkan child untuk meng- "overflow" parentnya |
+| Padding | Widget yang mengatur childnya dengan padding yang diberikan |
+| SizedBox | Widget yang memakasa size childnya dengan size yang diberikan |
+| SizedOverflowBox | Widget yang mengatur childnya berbeda dari parentnya, memungkinkan child untuk meng- "overflow" parentnya, tapi dengan size yang diberikan |
+| Transform | Widget yang mengaplikasikan childnya dengan transformasi yang diberikan sebelum menampilkanya |
+
+
+Multi-Child Layout Widget
+
+| Widget | Fungsi |
+| --- | --- |
+| Column | Widget yang melayout childrenya secara vertikal |
+| CustomMultiChildLayout | Widget yang melayout childrenya secara custom |
+| Flow | Widget layout flow algorithm, menggunakan delegate (FlowDelegate) untuk mengatur posisi dan dan size childrenya |
+| GridView | Widget yang melayout childrenya dalam style grid dengan cells|
+| IndexedStack | Widget yang menunjukkan satu childnya dari list Children, berdasarkan index dari stacknya |
+| LayoutBuilder | Widget yang membangun sebuah widget tree, yang bergantung pada size parent widgetnya |
+| ListBody | Widget yang mengatur childrenya secara sekuensial berdasarkan suatu axis |
+| ListView | List Widget yang scorllable dan linear |
+| Row | Widget yang melayout childrenya secara horizontal |
+| Stack | Widget yang melayout childrenya dalam stack, membolehkan overlap antara children dengan mudah |
+| Table | Layout widget dengan kolom dan baris |
+| Wrap | Widget yang melayout childrenya dengan run horizontal atau vertical, bergantung pada axisnya |
+
+Sliver Widget
+
+| Widget | Fungsi |
+| --- | --- |
+| CupertinoSliverNavigationBar | Widget yang mengimplementasikan iOS style navigation bar |
+| CustomScrollView | Widget yang mengimplementasikan scroll view dengan custom scroll behavior |
+| SliverAppBar | AppBar yang terintegrasi dengan scroll view |
+| SliverChildBuilderDelegate | Delegate yang mengatur pembuatan child widget |
+| SliverChildListDelegate | Delegate yang mengatur list dari child widget |
+| SliverFixedExtentList | Widget yang menempatkan children di axis yang sama dalam array yang linear |
+| SliverGrid | Sliver Widget yang mengatur childrenya dalam arrangment 2 dimensi |
+| SliverList | Sliver Widget yang mengatur childrenya dalam arrangment array linear di satu axis |
+| SliverPadding | Sliver Widget yang mengatur padding di sisi sliver lainya |
+| SliverPersistentHeader | Sliver Widget yang size berubah saat discroll ke ujung viewport  |
+| SliverToBoxAdapter | Sliver Widget yang memiliki satu child yang mengisi box |
+
+### Q8.3
+
+#### Sebutkan apa saja elemen input pada form yang kamu pakai pada tugas kali ini dan jelaskan mengapa kamu menggunakan elemen input tersebut!
+- Textfield: Saya memakai textfield untuk 3 input "nama", "harga", dan "Deskripsi", Validator yang digunakan berbeda untuk harga, namun saya menggunakan TextField karena adanya keperluan user untuk menulis semua field itu secara sendiri
+- DropdownButton: Saya memakai dropdownbutton untuk input "year", karena input ini hanya membutuhkan tahun, dan tidak perlu user untuk mengetiknya sendiri, selection yang di year merupakan list dari tahun-tahun yang saya beri.
+
+### Q8.4
+
+#### Bagaimana penerapan clean architecture pada aplikasi Flutter?
+Clean Architecture dalam Flutter merujuk kepada pendekatan arsitektur yang mementingkan _separation of concern_, yang berarti bahwa aplikasi kita akan terbagi menjadi beberapa layer yang masing-masing layer memiliki tanggung jawabnya sendiri-sendiri. <br>
+Dimana layer-layer tersebut adalah:
+- Presentation layer: Layer yang mengatur komponen UI kita (Dalam flutter merupakan widget), UI logic dan state management. Berkomunikasi dengan layer domain dan data layer.
+- Domain layer: Layer yang mengatur business logic (Cara UI dan data layer berkomunikasi). Mengdefiniskan _Use Cases_ dan _Interactors_ (komponen yang berinteraksi dengan entitas eksternal, seperti user).
+- Data Layer: Layer yang mengatur _Data Handling_ seperti pemanggilan API dan Database. Berkomunikasi dengan layer domain.
+
+Keuntungan dari clean architecture merupakan adalah membangun aplikasi yang teratur, mudah dimantain, dan dapat dilakukan testing. Dengan membagi berbagai jenis tugas ke kelasnya sendiri sesuai dengan tanggung jawabnya, masalah bisa terisolasi dan dibenarkan. <br>
+Memperlukan banyak investasi waktu dalam fase perencenaan dan pembuatan, namun memudahkan developer dalam jangka panjang.
+
 
