@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:retro_central/screens/order_form.dart';
 
 class ShopCard extends StatelessWidget {
   final ShopItem item;
@@ -17,6 +18,15 @@ class ShopCard extends StatelessWidget {
             ..hideCurrentSnackBar()
             ..showSnackBar(SnackBar(
                 content: Text("Kamu telah menekan tombol ${item.name}!")));
+          if (item.name == "Lihat Order"){
+
+          }
+          if (item.name == "Order Console"){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const OrderForm()),
+            );
+          }
         },
         child: Container(
           // Container untuk menyimpan Icon dan Text
