@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:retro_central/widgets/left_drawer.dart';
+import 'package:retro_central/screens/order_list.dart';
+
 
 class OrderForm extends StatefulWidget{
   const OrderForm({super.key});
@@ -168,7 +170,8 @@ class _OrderFormState extends State<OrderForm>{
                                 actions: [
                                   TextButton(
                                     onPressed: () {
-                                      Navigator.pop(context);
+                                      final newOrder = Console(_name, _price, _description, _year);
+                                      Navigator.pop(context, newOrder); //return newOrder object
                                     },
                                     child: const Text("Confirm"),
                                   )
@@ -194,3 +197,4 @@ class _OrderFormState extends State<OrderForm>{
     );
   }
 }
+

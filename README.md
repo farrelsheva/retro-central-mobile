@@ -160,3 +160,118 @@ Keuntungan dari clean architecture merupakan adalah membangun aplikasi yang tera
 Memperlukan banyak investasi waktu dalam fase perencenaan dan pembuatan, namun memudahkan developer dalam jangka panjang.
 
 
+### Q8.5
+
+#### Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step!
+
+- Sebagai implementasi clean architecture, saya membuat direktori untuk widget dan screen yang berbeda `screens` dan `widgets` di dalam direktori `lib`.
+  - Di dalam `screens`, dart file `order_form` dan `order_list` merupakan screen yang akan ditampilkan di dalam aplikasi.
+  - Di dalam `widgets`, `Shop_Card`, yang merupakan item yang ditunjukkan di menu utama, dan `left drawer` yang merupakan salah satu objektif dari tugas
+
+Order Form Page:
+- Di dalam `order_form.dart` terdapat class `OrderForm` yang merupakan stateful widget yang akan menampilkan form untuk membuat order baru.
+- Di dalam State OrderForm, akan ada key yang merupakan handler dari form untuk penyimpanan dan validasi.
+```
+final _formKey = GlobalKey<FormState>();
+```
+- Dalam statenya, saya menyatakan variable yang akan digunakan sebagai input, dalam konteks tugas ini, saya menambahkan  variable 'year' yang merupakan integer
+
+```
+  String _name = ' ';
+  int _price = 0;
+  String _description = '';
+  int _year = DateTime.now().year;
+```
+- Untuk `name`, `price`, dan `description`, saya menggunakan `TextFormField` yang merupakan widget yang memungkinkan user untuk menginput text, dengan validator yang berbeda untuk `price` dan `year`
+```
+child: TextFormField(
+                onChanged: (String? value) {
+                  setState(() {
+                    [attribute field] = value!;
+                  });
+                },
+                validator: (String? value) {
+                  if (kondisi tidak benar) {
+                    return "error message";
+                  }
+                  return null;
+                },             
+```
+- Bisa dilihat bahwa logika onChanged dan Validator akan mirip kecuali pada harga dan year, dimana akan menggunakan parse int untuk mengubah string menjadi integer.
+- Untuk input `year`, saya menggunakan `DropdownButton` yang merupakan widget yang memungkinkan user untuk memilih dari list yang telah ditentukan.
+```
+ child: DropdownButton<int>(
+                      isExpanded: true,
+                      value: _year,
+                      onChanged: (int? newValue) {
+                        setState(() {
+                          _year = newValue!;
+                        });
+                      },
+```
+- Di dalam `DropdownButton`, saya menggunakan `List.generate` untuk membuat list dari tahun-tahun yang akan ditampilkan di dalam dropdown
+
+- Tombol `Save` merupakan sebuah elevatedButton yang di wrap dalam Column dan sebuah Align, rencanya adalah untuk memvalidasi form menggunakan forkmkey yang dibuat tadi lalu, setelah tervalidasi menggunakan routing untuk pergi orderlist untuk melihat item yang baru dibuat.
+```
+ if (_formKey.currentState!.validate()) {
+                        showDialog(
+                            context: context,
+                            builder: (context){
+                              return AlertDialog(
+                                title: const Text("Console Order"),
+                                content: SingleChildScrollView(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text("Name: $_name"),
+                                      Text("Price: $_price"),
+                                      Text("Description: $_description"),
+                                      Text("Year: $_year"),
+                                    ],
+                                  )
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      final newOrder = Console(_name, _price, _description, _year);
+                                      Navigator.pop(context, newOrder); //return newOrder object
+                                    },
+                                    child: const Text("Confirm"),
+
+```
+- Dilihat juga saat tombol 'save' ditekan, akan menunjukkan popup (AlertDialog) yang menunjukkan data yang telah diinput, dan akan mengembalikan object newOrder yang akan ditampilkan di orderList.
+
+Page Order form juga bisa dinavigasi dari home page, dengan memakai if statement untuk memvalidasi page apa yang ditekan, kita bisa memanggil navigator untuk mem-push route screen yang benar
+```
+if (item.name == "Lihat Order"){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const OrderList()),
+            );
+          }
+          if (item.name == "Order Console"){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>  OrderForm()),
+            );
+          }
+```
+
+ Left Drawer: <br>
+Sebagai imeplementasi Clean Architecture, saya membuat direktori bernama `widgets` yang menempatkan class-class widgets yang saya buat sebagai cara gampang mengaksesnya dan sebagai cara untuk memisahkan logic dari screen dan widget.
+
+- Di dalam `widgets`, `left_drawer` merupakan widget yang akan menampilkan drawer di dalam aplikasi.
+- Untuk membuat drawer sebagai alat navigasi, children yang saya beri adalah sebuah ListTile, yang akan memanggil Navigator untuk berpindah ke screen yang diinginkan.
+```
+ListTile(
+            leading: const Icon(Icons.home),
+            title: const Text('Main Menu'),
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => MyHomePage())
+              );
+            },
+```
+- Dilihat dari atas ini, ListTile memiliki function onTap yang akan memanggil Navigator.pushReplacement, yang akan mengganti screen yang sedang ditampilkan dengan screen yang baru, dan tidak bisa kembali ke screen sebelumnya, dalam contoh ini, akan kembali ke MyHomePage.
+- Implementasi untuk orderForm dan orderList mirip.
