@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:retro_central/widgets/left_drawer.dart';
-import 'package:retro_central/screens/order_list.dart';
+import 'package:provider/provider.dart';
+import 'package:retro_central/screens/menu.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'dart:convert';
 
 
 class OrderForm extends StatefulWidget{
@@ -13,13 +16,13 @@ class OrderForm extends StatefulWidget{
 class _OrderFormState extends State<OrderForm>{
   final _formKey = GlobalKey<FormState>();
   String _name = '';
-  int _price = 0;
+  int _amount = 0;
   String _description = '';
-  int _year = DateTime.now().year;
-  List<int> yearList = List<int>.generate(100, (i) => 1970 + i);
+
 
   @override
   Widget build(BuildContext context){
+    final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -64,31 +67,31 @@ class _OrderFormState extends State<OrderForm>{
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    hintText: "Price of Console",
-                    labelText: "Price",
+                    hintText: "Amount of Console",
+                    labelText: "Amount",
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0)
                     ),
                   ),
                   onChanged: (String? value) {
                     setState(() {
-                      _price = int.parse(value!);
+                      _amount = int.parse(value!);
                     });
                   },
                   validator: (String? value)  {
                     if (value == null || value.isEmpty) {
-                      return "price can't be empty!";
+                      return "amount can't be empty!";
                     }
                     if (int.tryParse(value) == null) {
-                      return "Price must be a number!";
+                      return "Amount must be a number!";
                     }
                     if (int.parse(value) < 0) {
-                      return "Price must be a positive number!";
+                      return "Amount must be a positive number!";
                     }
                     return null;
                   },
                 ),
-              ),//price form
+              ),//Amount form
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
@@ -112,34 +115,6 @@ class _OrderFormState extends State<OrderForm>{
                   },
                 ),
               ),//description form
-              Padding (
-                padding: const EdgeInsets.all(8.0),
-                child: InputDecorator(
-                  decoration: InputDecoration(
-                    labelText: 'Year',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                  ),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<int>(
-                      isExpanded: true,
-                      value: _year,
-                      onChanged: (int? newValue) {
-                        setState(() {
-                          _year = newValue!;
-                        });
-                      },
-                      items: yearList.map((int value) {
-                        return DropdownMenuItem<int>(
-                          value: value,
-                          child: Text(value.toString()),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ),
-              ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
@@ -149,38 +124,32 @@ class _OrderFormState extends State<OrderForm>{
                       backgroundColor:
                       MaterialStateProperty.all(Colors.deepOrange),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        showDialog(
-                            context: context,
-                            builder: (context){
-                              return AlertDialog(
-                                title: const Text("Console Order"),
-                                content: SingleChildScrollView(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Name: $_name"),
-                                      Text("Price: $_price"),
-                                      Text("Description: $_description"),
-                                      Text("Year: $_year"),
-                                    ],
-                                  )
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      final newOrder = Console(_name, _price, _description, _year);
-                                      Navigator.pop(context, newOrder); //return newOrder object
-                                    },
-                                    child: const Text("Confirm"),
-                                  )
-                                ],
-                              );
-                            }
-                        );
-                        _formKey.currentState!.reset();
-                        _year = DateTime.now().year;
+                          // Kirim ke Django dan tunggu respons
+                          // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
+                          final response = await request.postJson(
+                            "http://farrel-sheva-tugas.pbp.cs.ui.ac.id/create-flutter/",jsonEncode(<String, String>{
+                              'name': _name,
+                              'amount': _amount.toString(),
+                              'description': _description,
+                            }));
+                        if (response['status'] == 'success') {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                                content: Text("Produk baru berhasil disimpan!"),
+                          ));
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => MyHomePage()),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content:
+                                Text("Terdapat kesalahan, silakan coba lagi."),
+                          ));
+                        }
                       }
                     },
                     child: const Text(

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:retro_central/screens/order_form.dart';
 import 'package:retro_central/screens/order_list.dart';
-
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:retro_central/screens/login.dart';
 class ShopCard extends StatelessWidget {
   final ShopItem item;
 
@@ -9,11 +11,12 @@ class ShopCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Material(
       color: item.color,
       child: InkWell(
         // Area responsive terhadap sentuhan
-        onTap: () {
+        onTap: () async {
           // Memunculkan SnackBar ketika diklik
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
@@ -25,13 +28,32 @@ class ShopCard extends StatelessWidget {
               MaterialPageRoute(builder: (context) => const OrderList()),
             );
           }
-          if (item.name == "Order Console"){
+          if (item.name == "Order Console") {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) =>  OrderForm()),
+              MaterialPageRoute(builder: (context) => OrderForm()),
             );
+          }else if (item.name == "Logout") {
+            final response = await request.logout(
+                "http://farrel-sheva-tugas.pbp.cs.ui.ac.id/auth/logout/");
+            String message = response["message"];
+            if (response['status']) {
+              String uname = response["username"];
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("$message Sampai jumpa, $uname."),
+              ));
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("$message"),
+              ));
+            }
           }
         },
+
         child: Container(
           // Container untuk menyimpan Icon dan Text
           padding: const EdgeInsets.all(8),

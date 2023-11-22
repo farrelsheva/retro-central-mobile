@@ -275,3 +275,70 @@ ListTile(
 ```
 - Dilihat dari atas ini, ListTile memiliki function onTap yang akan memanggil Navigator.pushReplacement, yang akan mengganti screen yang sedang ditampilkan dengan screen yang baru, dan tidak bisa kembali ke screen sebelumnya, dalam contoh ini, akan kembali ke MyHomePage.
 - Implementasi untuk orderForm dan orderList mirip.
+
+
+## Tugas 9
+
+### Q9.1
+#### Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu? Jika iya, apakah hal tersebut lebih baik daripada membuat model sebelum melakukan pengambilan data JSON?
+Dalam Flutter, kita bisa melakukan pengambilan data JSON tanpa membuat model terlebih dahulu, namun hal tersebut tidak disarankan, ini dikarenakan dengan membuat model terlebih dahulu, kita bisa mengatur data yang akan kita ambil, dan memudahkan kita dalam mengakses data tersebut. <br>
+dengan mneggunakan dart convert, kita bisa mengubah request dari API menjadi sebuah object yang bisa kita akses. <br>
+
+### Q9.2
+#### Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+Dalam konteks projek flutter ini, CookieRequest merupakan sebuah object yang dibagikan oleh package 'Provider' kepada seluruh komponen di aplikasi,
+Dengan menggunakan Provider, CookieRequest dikelola secara terpusat. Ini memudahkan pengelolaan state yang berkaitan dengan cookies, seperti menyimpan, mengupdate, dan mengakses cookies yang dibutuhkan untuk berbagai permintaan HTTP.
+
+### Q9.3
+#### jelaskan mekanisme pengambilan data dari JSON hingga dapat ditampilkan pada Flutter.
+Data akan diambil dari JSON menggunakan package http dari flutter, menggunakana paket ini kita bisa menambil data dari Internet. Data diambil dari API Django Projeckt kita dalam bentuk json dan diubah menjadi object menggunakan dart convert. <br>
+Dari object ini kita bisa mengambil data yang kita butuhkan, dan menampilkannya di dalam aplikasi flutter. <br>
+
+### Q9.4
+#### Jelaskan mekanisme autentikasi dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+Dalam projek ini, Login logic semuanya dihandle oleh projek django, Aplikasi Flutter hanya bertugas untuk mengirimkan data username dan password ke API Django, menerima response dari API Django, dan beroutput sesuai dengan output request yang dikirimkan. <br>
+Jika request berhasil, maka akan muncul menu yang berisi sesuai cookies user yang logged in, jika tidak, maka akan muncul pesan error yang sesuai dengan error yang diberikan oleh API Django. <br>
+
+### Q9.5
+#### Sebutkan seluruh widget yang kamu pakai pada tugas ini dan jelaskan fungsinya masing-masing.
+| Widget | Fungsi |
+| --- | --- |
+| MyApp | merupakan root widget dari aplikasi flutter. |
+| SizedBox | Widget yang memakasa size childnya dengan size yang diberikan |
+| FutureBuilder | Widget yang membangun widget berdasarkan future yang diberikan |
+
+#### Step-by-step
+
+- Membuat halaman login pada proyek tugas Flutter.
+  - Membuat screen baru bernama `login.dart` di dalam direktori `lib/screens`.
+  - Login page class merupakan stateless widget yang akan menampilkan form untuk login.
+    - Menggunakan cookieRequest sebagai vehicle untuk mengirimkan data ke API Django.
+    - input form merupakan TextFormField yang akan mengambil input username dan password.
+    - saat berhasil loggedin, Navigator akan mengganti screen menjadi `home.dart`.
+
+- Mengintegrasikan sistem autentikasi Django dengan proyek tugas Flutter.
+  - Dalam Django membuat app baru bernama `authentication` dengan tujuan mengambil data user secara online
+  - Dengan mneggunakan Json sebagai format penerimaan data user, kita bisa mengeverifikasi user dengan authenticate dan login.
+  - Kita juga bisa mengambil request untuk logout dan menggunakan jsonResponse sebagai response dari request tersebut.
+  - Intinya, flutter app berkomunikasi dengan Django web app menggunakan JSON dan HTTP request.
+
+- Membuat model kustom sesuai dengan proyek aplikasi Django.
+  - Dengan Quicktype, ambil contoh data dari Django web app model, an ubah menjadi dart object yang sesuai
+  - Dengan ini kita bisa membuat model yang sama dalam dart, dan membuat objek yang bisa dimasukkan ke dalam database web app.
+  - Kita juga bisa mengambil data dari database untuk ditunjukkan ke dalam aplikasi flutter.
+
+-  Membuat halaman yang berisi daftar semua item yang terdapat pada endpoint JSON di Django yang telah kamu deploy.
+   -  Screen baru di saya bernama "orderlist"
+   -  Orderlistpage merupakan stateful widget yang akan menampilkan list dari order yang telah dibuat.
+   -  Mempunyai sebuah async function yang akan mengambil data dari API Django dan mengubahnya menjadi object yang bisa ditampilkan.
+   -  Dengan menggunakan FutureBuilder, kita bisa menampilkan data yang telah diambil dari API Django ke dalam widget.
+   -  FutureBuilder akan menampilkan barang jika snapshotnya memiliki data, dan akan menampilkan circular progress indicator jika tidak.
+   -  Item diletakkan dalam sebuah List yang diubah dari format Json menjadi model kustom yang kita buat.
+   -  Dengan mneggunakan ListView.builder, kita bisa menampilkan list dari item yang telah kita buat.
+   -  dan dengan key "fields" kita bisa memperlihatkan data yang kita butuhkan dari item yang telah kita buat.
+
+- Membuat halaman detail untuk setiap item yang terdapat pada halaman daftar Item.
+  - Di Setiap item, kita bisa menambahkan sebuah button yang akan mengarahkan kita ke halaman detail dari item tersebut.
+  - di OnPress, kita bisa menggunakan Navigator untuk berpindah ke halaman detail dari item tersebut dan mengambil data snapshot dari list item dan dibawa ke dalam detail page.
+  - Screen `order_detail`, akan menampilkan detail dari item yang telah dipilih dengan mengakses attribut fields dari item yang di pass dalam navigator
+  - memakai navigator push agar bisa kembali ke halaman sebelumnya.
