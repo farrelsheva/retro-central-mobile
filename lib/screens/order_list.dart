@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:retro_central/screens/order_detail.dart';
 import 'package:retro_central/widgets/left_drawer.dart';
-import 'order_form.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:retro_central/models/item.dart';
@@ -93,7 +92,7 @@ class _OrderListState extends State<OrderList> {
                                 MaterialPageRoute(builder: (context) => OrderDetail(item: snapshot.data![index] )),
                               );
                             },
-                                child: Text("SEE DETAIL"))
+                                child: const Text("SEE DETAIL"))
                           ],
                         ),
                       ));

@@ -3,7 +3,7 @@ import 'package:retro_central/models/item.dart';
 
 class OrderDetail extends StatefulWidget {
   final Item item;
-  const OrderDetail(Key? key,  this.item) : super(key: key);
+  const OrderDetail({Key? key, required this.item}) : super(key: key);
 
   @override
   _OrderDetailState createState() => _OrderDetailState();
